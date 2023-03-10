@@ -1,2 +1,2 @@
-# data303
+# DATA303
 Statistical Modelling Regression
