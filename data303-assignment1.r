@@ -3,19 +3,19 @@
   {
    "cell_type": "code",
    "execution_count": 1,
-   "id": "1691db8d",
+   "id": "7a640e07",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-03-13T20:54:39.275229Z",
-     "iopub.status.busy": "2023-03-13T20:54:39.273420Z",
-     "iopub.status.idle": "2023-03-13T20:54:40.721974Z",
-     "shell.execute_reply": "2023-03-13T20:54:40.720571Z"
+     "iopub.execute_input": "2023-03-15T01:34:16.984505Z",
+     "iopub.status.busy": "2023-03-15T01:34:16.981927Z",
+     "iopub.status.idle": "2023-03-15T01:34:18.547893Z",
+     "shell.execute_reply": "2023-03-15T01:34:18.546184Z"
     },
     "papermill": {
-     "duration": 1.457356,
-     "end_time": "2023-03-13T20:54:40.724013",
+     "duration": 1.578921,
+     "end_time": "2023-03-15T01:34:18.550941",
      "exception": false,
-     "start_time": "2023-03-13T20:54:39.266657",
+     "start_time": "2023-03-15T01:34:16.972020",
      "status": "completed"
     },
     "tags": []
@@ -56,63 +56,38 @@
    ]
   },
   {
-   "cell_type": "code",
-   "execution_count": 2,
-   "id": "36d5cc7e",
+   "cell_type": "markdown",
+   "id": "5c9da328",
    "metadata": {
-    "_kg_hide-input": true,
-    "_kg_hide-output": true,
-    "execution": {
-     "iopub.execute_input": "2023-03-13T20:54:40.767376Z",
-     "iopub.status.busy": "2023-03-13T20:54:40.734117Z",
-     "iopub.status.idle": "2023-03-13T20:54:41.001292Z",
-     "shell.execute_reply": "2023-03-13T20:54:41.000049Z"
-    },
     "papermill": {
-     "duration": 0.274518,
-     "end_time": "2023-03-13T20:54:41.003006",
+     "duration": 0.006765,
+     "end_time": "2023-03-15T01:34:18.564729",
      "exception": false,
-     "start_time": "2023-03-13T20:54:40.728488",
+     "start_time": "2023-03-15T01:34:18.557964",
      "status": "completed"
     },
     "tags": []
    },
-   "outputs": [
-    {
-     "name": "stderr",
-     "output_type": "stream",
-     "text": [
-      "\u001b[1mRows: \u001b[22m\u001b[34m572\u001b[39m \u001b[1mColumns: \u001b[22m\u001b[34m10\u001b[39m\n",
-      "\u001b[36m──\u001b[39m \u001b[1mColumn specification\u001b[22m \u001b[36m────────────────────────────────────────────────────────\u001b[39m\n",
-      "\u001b[1mDelimiter:\u001b[22m \",\"\n",
-      "\u001b[31mchr\u001b[39m (2): region, area\n",
-      "\u001b[32mdbl\u001b[39m (8): palmitic, palmitoleic, stearic, oleic, linoleic, linolenic, arachid...\n",
-      "\n",
-      "\u001b[36mℹ\u001b[39m Use `spec()` to retrieve the full column specification for this data.\n",
-      "\u001b[36mℹ\u001b[39m Specify the column types or set `show_col_types = FALSE` to quiet this message.\n"
-     ]
-    }
-   ],
    "source": [
-    "olive <- read_csv(\"/kaggle/input/data303-assignment1-datasets/olive.csv\")"
+    "Q1. a."
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
-   "id": "320a3947",
+   "execution_count": 2,
+   "id": "1495c548",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-03-13T20:54:41.013952Z",
-     "iopub.status.busy": "2023-03-13T20:54:41.012855Z",
-     "iopub.status.idle": "2023-03-13T20:54:41.131330Z",
-     "shell.execute_reply": "2023-03-13T20:54:41.130010Z"
+     "iopub.execute_input": "2023-03-15T01:34:18.621059Z",
+     "iopub.status.busy": "2023-03-15T01:34:18.579996Z",
+     "iopub.status.idle": "2023-03-15T01:34:18.967574Z",
+     "shell.execute_reply": "2023-03-15T01:34:18.965386Z"
     },
     "papermill": {
-     "duration": 0.12594,
-     "end_time": "2023-03-13T20:54:41.133249",
+     "duration": 0.399012,
+     "end_time": "2023-03-15T01:34:18.970739",
      "exception": false,
-     "start_time": "2023-03-13T20:54:41.007309",
+     "start_time": "2023-03-15T01:34:18.571727",
      "status": "completed"
     },
     "tags": []
@@ -185,21 +160,57 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "id": "5a01af62",
+   "metadata": {
+    "papermill": {
+     "duration": 0.007052,
+     "end_time": "2023-03-15T01:34:18.984964",
+     "exception": false,
+     "start_time": "2023-03-15T01:34:18.977912",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "Based on the result:\n",
+    "<br>i. Price and kms might have incorrect values because the maximum values are extreme, compared to other statistics (the mean and median)\n",
+    "<br>ii. There are missing observations for mileage, esize, and power variables"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "15d63907",
+   "metadata": {
+    "papermill": {
+     "duration": 0.006749,
+     "end_time": "2023-03-15T01:34:18.998754",
+     "exception": false,
+     "start_time": "2023-03-15T01:34:18.992005",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "b."
+   ]
+  },
+  {
    "cell_type": "code",
-   "execution_count": 4,
-   "id": "9c6480b7",
+   "execution_count": 3,
+   "id": "07a526d9",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-03-13T20:54:41.146529Z",
-     "iopub.status.busy": "2023-03-13T20:54:41.145248Z",
-     "iopub.status.idle": "2023-03-13T20:54:41.236490Z",
-     "shell.execute_reply": "2023-03-13T20:54:41.235212Z"
+     "iopub.execute_input": "2023-03-15T01:34:19.015943Z",
+     "iopub.status.busy": "2023-03-15T01:34:19.014437Z",
+     "iopub.status.idle": "2023-03-15T01:34:19.122932Z",
+     "shell.execute_reply": "2023-03-15T01:34:19.120984Z"
     },
     "papermill": {
-     "duration": 0.09931,
-     "end_time": "2023-03-13T20:54:41.238256",
+     "duration": 0.120067,
+     "end_time": "2023-03-15T01:34:19.125674",
      "exception": false,
-     "start_time": "2023-03-13T20:54:41.138946",
+     "start_time": "2023-03-15T01:34:19.005607",
      "status": "completed"
     },
     "tags": []
@@ -226,20 +237,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 5,
-   "id": "5d314fa8",
+   "execution_count": 4,
+   "id": "e898427d",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-03-13T20:54:41.250476Z",
-     "iopub.status.busy": "2023-03-13T20:54:41.249359Z",
-     "iopub.status.idle": "2023-03-13T20:54:43.752200Z",
-     "shell.execute_reply": "2023-03-13T20:54:43.750825Z"
+     "iopub.execute_input": "2023-03-15T01:34:19.143235Z",
+     "iopub.status.busy": "2023-03-15T01:34:19.141682Z",
+     "iopub.status.idle": "2023-03-15T01:34:22.671342Z",
+     "shell.execute_reply": "2023-03-15T01:34:22.669692Z"
     },
     "papermill": {
-     "duration": 2.512132,
-     "end_time": "2023-03-13T20:54:43.755440",
+     "duration": 3.542271,
+     "end_time": "2023-03-15T01:34:22.675170",
      "exception": false,
-     "start_time": "2023-03-13T20:54:41.243308",
+     "start_time": "2023-03-15T01:34:19.132899",
      "status": "completed"
     },
     "tags": []
@@ -269,21 +280,58 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "id": "c9cd94b0",
+   "metadata": {
+    "papermill": {
+     "duration": 0.009272,
+     "end_time": "2023-03-15T01:34:22.695003",
+     "exception": false,
+     "start_time": "2023-03-15T01:34:22.685731",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "Based on the scatterplot matrix\n",
+    "<br>i. esize and power have non-linear relationship with the response variable price\n",
+    "<br>ii. because the response variable is skewed, it is necessary to apply a transformation to the response variable price when fitting a linear\n",
+    "regression model"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "09ab363d",
+   "metadata": {
+    "papermill": {
+     "duration": 0.008954,
+     "end_time": "2023-03-15T01:34:22.713003",
+     "exception": false,
+     "start_time": "2023-03-15T01:34:22.704049",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "c. Linear model for price including all predictors with no transformations or interactions."
+   ]
+  },
+  {
    "cell_type": "code",
-   "execution_count": 6,
-   "id": "86cb075c",
+   "execution_count": 5,
+   "id": "c05fdcdb",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-03-13T20:54:43.770460Z",
-     "iopub.status.busy": "2023-03-13T20:54:43.769163Z",
-     "iopub.status.idle": "2023-03-13T20:54:43.829075Z",
-     "shell.execute_reply": "2023-03-13T20:54:43.827346Z"
+     "iopub.execute_input": "2023-03-15T01:34:22.734271Z",
+     "iopub.status.busy": "2023-03-15T01:34:22.732700Z",
+     "iopub.status.idle": "2023-03-15T01:34:22.830164Z",
+     "shell.execute_reply": "2023-03-15T01:34:22.824879Z"
     },
     "papermill": {
-     "duration": 0.069507,
-     "end_time": "2023-03-13T20:54:43.831182",
+     "duration": 0.113059,
+     "end_time": "2023-03-15T01:34:22.835032",
      "exception": false,
-     "start_time": "2023-03-13T20:54:43.761675",
+     "start_time": "2023-03-15T01:34:22.721973",
      "status": "completed"
     },
     "tags": []
@@ -333,21 +381,38 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "id": "4e3ed1e3",
+   "metadata": {
+    "papermill": {
+     "duration": 0.022691,
+     "end_time": "2023-03-15T01:34:22.880474",
+     "exception": false,
+     "start_time": "2023-03-15T01:34:22.857783",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "An estimate of σ2, the error variance"
+   ]
+  },
+  {
    "cell_type": "code",
-   "execution_count": 7,
-   "id": "1d8409cd",
+   "execution_count": 6,
+   "id": "df5df84e",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-03-13T20:54:43.850943Z",
-     "iopub.status.busy": "2023-03-13T20:54:43.849401Z",
-     "iopub.status.idle": "2023-03-13T20:54:43.868470Z",
-     "shell.execute_reply": "2023-03-13T20:54:43.866792Z"
+     "iopub.execute_input": "2023-03-15T01:34:22.912194Z",
+     "iopub.status.busy": "2023-03-15T01:34:22.910687Z",
+     "iopub.status.idle": "2023-03-15T01:34:22.940612Z",
+     "shell.execute_reply": "2023-03-15T01:34:22.936691Z"
     },
     "papermill": {
-     "duration": 0.030952,
-     "end_time": "2023-03-13T20:54:43.870573",
+     "duration": 0.046061,
+     "end_time": "2023-03-15T01:34:22.945402",
      "exception": false,
-     "start_time": "2023-03-13T20:54:43.839621",
+     "start_time": "2023-03-15T01:34:22.899341",
      "status": "completed"
     },
     "tags": []
@@ -378,56 +443,74 @@
   },
   {
    "cell_type": "markdown",
-   "id": "30ccc413",
+   "id": "df45eb1a",
    "metadata": {
     "papermill": {
-     "duration": 0.008251,
-     "end_time": "2023-03-13T20:54:43.887577",
+     "duration": 0.023303,
+     "end_time": "2023-03-15T01:34:22.992191",
      "exception": false,
-     "start_time": "2023-03-13T20:54:43.879326",
+     "start_time": "2023-03-15T01:34:22.968888",
      "status": "completed"
     },
     "tags": []
    },
    "source": [
-    "When there is a car whose predicted price $\\hat{E(Y|X)}$ equals the intercept $\\beta_0$, all the predictor variables must equal zero"
+    "d. When there is a car whose predicted price $\\hat{E(Y|X)}$ equals the intercept $\\beta_0$, all the predictor variables must equal zero"
    ]
   },
   {
    "cell_type": "markdown",
-   "id": "166add64",
+   "id": "0a379887",
    "metadata": {
     "papermill": {
-     "duration": 0.009019,
-     "end_time": "2023-03-13T20:54:43.906316",
+     "duration": 0.02269,
+     "end_time": "2023-03-15T01:34:23.037940",
      "exception": false,
-     "start_time": "2023-03-13T20:54:43.897297",
+     "start_time": "2023-03-15T01:34:23.015250",
      "status": "completed"
     },
     "tags": []
    },
    "source": [
-    "e. i. txManual: When txManual increases by 1 unit, the price of the car decreases by 414.8 \n",
+    "e. \n",
+    "<br>i. txManual: When txManual increases by 1 unit, the price of the car decreases by 414.8 \n",
     "units\n",
     "<br> ii. Mileage: When Mileage increases by 1 unit, the price of the car increases by 30.9 units"
    ]
   },
   {
+   "cell_type": "markdown",
+   "id": "9c36065e",
+   "metadata": {
+    "papermill": {
+     "duration": 0.009579,
+     "end_time": "2023-03-15T01:34:23.060409",
+     "exception": false,
+     "start_time": "2023-03-15T01:34:23.050830",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "f. 95% confidence and prediction intervals for the last three observations in the dataset"
+   ]
+  },
+  {
    "cell_type": "code",
-   "execution_count": 8,
-   "id": "3ad82226",
+   "execution_count": 7,
+   "id": "c3127dd8",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-03-13T20:54:43.927540Z",
-     "iopub.status.busy": "2023-03-13T20:54:43.925529Z",
-     "iopub.status.idle": "2023-03-13T20:54:43.958730Z",
-     "shell.execute_reply": "2023-03-13T20:54:43.956324Z"
+     "iopub.execute_input": "2023-03-15T01:34:23.083043Z",
+     "iopub.status.busy": "2023-03-15T01:34:23.081483Z",
+     "iopub.status.idle": "2023-03-15T01:34:23.110226Z",
+     "shell.execute_reply": "2023-03-15T01:34:23.107937Z"
     },
     "papermill": {
-     "duration": 0.046363,
-     "end_time": "2023-03-13T20:54:43.961437",
+     "duration": 0.043241,
+     "end_time": "2023-03-15T01:34:23.113155",
      "exception": false,
-     "start_time": "2023-03-13T20:54:43.915074",
+     "start_time": "2023-03-15T01:34:23.069914",
      "status": "completed"
     },
     "tags": []
@@ -460,20 +543,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 9,
-   "id": "c259fab4",
+   "execution_count": 8,
+   "id": "f3268af3",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-03-13T20:54:43.981417Z",
-     "iopub.status.busy": "2023-03-13T20:54:43.980233Z",
-     "iopub.status.idle": "2023-03-13T20:54:44.000861Z",
-     "shell.execute_reply": "2023-03-13T20:54:43.998869Z"
+     "iopub.execute_input": "2023-03-15T01:34:23.136383Z",
+     "iopub.status.busy": "2023-03-15T01:34:23.134902Z",
+     "iopub.status.idle": "2023-03-15T01:34:23.159740Z",
+     "shell.execute_reply": "2023-03-15T01:34:23.157353Z"
     },
     "papermill": {
-     "duration": 0.03301,
-     "end_time": "2023-03-13T20:54:44.003203",
+     "duration": 0.040768,
+     "end_time": "2023-03-15T01:34:23.163792",
      "exception": false,
-     "start_time": "2023-03-13T20:54:43.970193",
+     "start_time": "2023-03-15T01:34:23.123024",
      "status": "completed"
     },
     "tags": []
@@ -505,21 +588,55 @@
    ]
   },
   {
+   "cell_type": "markdown",
+   "id": "66ef2744",
+   "metadata": {
+    "papermill": {
+     "duration": 0.009964,
+     "end_time": "2023-03-15T01:34:23.183790",
+     "exception": false,
+     "start_time": "2023-03-15T01:34:23.173826",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "Prediction intervals must account for both the uncertainty in estimating the population mean, plus the random variation of the individual values. Therefore, the prediction interval is always wider than a confidence interval"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "999411bd",
+   "metadata": {
+    "papermill": {
+     "duration": 0.009402,
+     "end_time": "2023-03-15T01:34:23.202728",
+     "exception": false,
+     "start_time": "2023-03-15T01:34:23.193326",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "g. Residual diagnostics for the model"
+   ]
+  },
+  {
    "cell_type": "code",
-   "execution_count": 10,
-   "id": "9ed80871",
+   "execution_count": 9,
+   "id": "58858b0b",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-03-13T20:54:44.020653Z",
-     "iopub.status.busy": "2023-03-13T20:54:44.018461Z",
-     "iopub.status.idle": "2023-03-13T20:54:45.015807Z",
-     "shell.execute_reply": "2023-03-13T20:54:45.014186Z"
+     "iopub.execute_input": "2023-03-15T01:34:23.224689Z",
+     "iopub.status.busy": "2023-03-15T01:34:23.223252Z",
+     "iopub.status.idle": "2023-03-15T01:34:24.753544Z",
+     "shell.execute_reply": "2023-03-15T01:34:24.751912Z"
     },
     "papermill": {
-     "duration": 1.00893,
-     "end_time": "2023-03-13T20:54:45.019040",
+     "duration": 1.544915,
+     "end_time": "2023-03-15T01:34:24.757222",
      "exception": false,
-     "start_time": "2023-03-13T20:54:44.010110",
+     "start_time": "2023-03-15T01:34:23.212307",
      "status": "completed"
     },
     "tags": []
@@ -545,13 +662,13 @@
   },
   {
    "cell_type": "markdown",
-   "id": "66969c13",
+   "id": "8499cde7",
    "metadata": {
     "papermill": {
-     "duration": 0.00861,
-     "end_time": "2023-03-13T20:54:45.037654",
+     "duration": 0.012791,
+     "end_time": "2023-03-15T01:34:24.782807",
      "exception": false,
-     "start_time": "2023-03-13T20:54:45.029044",
+     "start_time": "2023-03-15T01:34:24.770016",
      "status": "completed"
     },
     "tags": []
@@ -565,20 +682,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
-   "id": "6fc886fc",
+   "execution_count": 10,
+   "id": "6afa6c5e",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-03-13T20:54:45.057999Z",
-     "iopub.status.busy": "2023-03-13T20:54:45.056648Z",
-     "iopub.status.idle": "2023-03-13T20:54:45.077991Z",
-     "shell.execute_reply": "2023-03-13T20:54:45.076695Z"
+     "iopub.execute_input": "2023-03-15T01:34:24.809858Z",
+     "iopub.status.busy": "2023-03-15T01:34:24.808327Z",
+     "iopub.status.idle": "2023-03-15T01:34:24.829542Z",
+     "shell.execute_reply": "2023-03-15T01:34:24.828071Z"
     },
     "papermill": {
-     "duration": 0.033578,
-     "end_time": "2023-03-13T20:54:45.079745",
+     "duration": 0.037056,
+     "end_time": "2023-03-15T01:34:24.831727",
      "exception": false,
-     "start_time": "2023-03-13T20:54:45.046167",
+     "start_time": "2023-03-15T01:34:24.794671",
      "status": "completed"
     },
     "tags": []
@@ -613,13 +730,13 @@
   },
   {
    "cell_type": "markdown",
-   "id": "852343d7",
+   "id": "d844c9c1",
    "metadata": {
     "papermill": {
-     "duration": 0.008605,
-     "end_time": "2023-03-13T20:54:45.096957",
+     "duration": 0.012076,
+     "end_time": "2023-03-15T01:34:24.855971",
      "exception": false,
-     "start_time": "2023-03-13T20:54:45.088352",
+     "start_time": "2023-03-15T01:34:24.843895",
      "status": "completed"
     },
     "tags": []
@@ -630,13 +747,13 @@
   },
   {
    "cell_type": "markdown",
-   "id": "5a60a8d7",
+   "id": "513a1712",
    "metadata": {
     "papermill": {
-     "duration": 0.008268,
-     "end_time": "2023-03-13T20:54:45.113472",
+     "duration": 0.0123,
+     "end_time": "2023-03-15T01:34:24.881102",
      "exception": false,
-     "start_time": "2023-03-13T20:54:45.105204",
+     "start_time": "2023-03-15T01:34:24.868802",
      "status": "completed"
     },
     "tags": []
@@ -649,20 +766,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
-   "id": "a773f692",
+   "execution_count": 11,
+   "id": "d1be5e40",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-03-13T20:54:45.133649Z",
-     "iopub.status.busy": "2023-03-13T20:54:45.132145Z",
-     "iopub.status.idle": "2023-03-13T20:54:45.223365Z",
-     "shell.execute_reply": "2023-03-13T20:54:45.222109Z"
+     "iopub.execute_input": "2023-03-15T01:34:24.909018Z",
+     "iopub.status.busy": "2023-03-15T01:34:24.907568Z",
+     "iopub.status.idle": "2023-03-15T01:34:25.023781Z",
+     "shell.execute_reply": "2023-03-15T01:34:25.021710Z"
     },
     "papermill": {
-     "duration": 0.103667,
-     "end_time": "2023-03-13T20:54:45.225680",
+     "duration": 0.132896,
+     "end_time": "2023-03-15T01:34:25.026392",
      "exception": false,
-     "start_time": "2023-03-13T20:54:45.122013",
+     "start_time": "2023-03-15T01:34:24.893496",
      "status": "completed"
     },
     "tags": []
@@ -706,13 +823,13 @@
   },
   {
    "cell_type": "markdown",
-   "id": "25964ec5",
+   "id": "bc7c8995",
    "metadata": {
     "papermill": {
-     "duration": 0.008892,
-     "end_time": "2023-03-13T20:54:45.243772",
+     "duration": 0.012821,
+     "end_time": "2023-03-15T01:34:25.052029",
      "exception": false,
-     "start_time": "2023-03-13T20:54:45.234880",
+     "start_time": "2023-03-15T01:34:25.039208",
      "status": "completed"
     },
     "tags": []
@@ -723,13 +840,13 @@
   },
   {
    "cell_type": "markdown",
-   "id": "b5afb4b6",
+   "id": "f6c47a55",
    "metadata": {
     "papermill": {
-     "duration": 0.008834,
-     "end_time": "2023-03-13T20:54:45.261446",
+     "duration": 0.013176,
+     "end_time": "2023-03-15T01:34:25.078155",
      "exception": false,
-     "start_time": "2023-03-13T20:54:45.252612",
+     "start_time": "2023-03-15T01:34:25.064979",
      "status": "completed"
     },
     "tags": []
@@ -740,20 +857,20 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 13,
-   "id": "6862804b",
+   "execution_count": 12,
+   "id": "aada5440",
    "metadata": {
     "execution": {
-     "iopub.execute_input": "2023-03-13T20:54:45.282743Z",
-     "iopub.status.busy": "2023-03-13T20:54:45.281229Z",
-     "iopub.status.idle": "2023-03-13T20:54:45.396081Z",
-     "shell.execute_reply": "2023-03-13T20:54:45.394109Z"
+     "iopub.execute_input": "2023-03-15T01:34:25.107121Z",
+     "iopub.status.busy": "2023-03-15T01:34:25.105571Z",
+     "iopub.status.idle": "2023-03-15T01:34:25.247591Z",
+     "shell.execute_reply": "2023-03-15T01:34:25.243436Z"
     },
     "papermill": {
-     "duration": 0.127986,
-     "end_time": "2023-03-13T20:54:45.398432",
+     "duration": 0.161224,
+     "end_time": "2023-03-15T01:34:25.252208",
      "exception": false,
-     "start_time": "2023-03-13T20:54:45.270446",
+     "start_time": "2023-03-15T01:34:25.090984",
      "status": "completed"
     },
     "tags": []
@@ -864,13 +981,13 @@
   },
   {
    "cell_type": "markdown",
-   "id": "56daaba7",
+   "id": "c157db4a",
    "metadata": {
     "papermill": {
-     "duration": 0.012516,
-     "end_time": "2023-03-13T20:54:45.423521",
+     "duration": 0.031262,
+     "end_time": "2023-03-15T01:34:25.314953",
      "exception": false,
-     "start_time": "2023-03-13T20:54:45.411005",
+     "start_time": "2023-03-15T01:34:25.283691",
      "status": "completed"
     },
     "tags": []
@@ -881,37 +998,276 @@
   },
   {
    "cell_type": "markdown",
-   "id": "4cb9e7b7",
+   "id": "f18c448c",
    "metadata": {
     "papermill": {
-     "duration": 0.013043,
-     "end_time": "2023-03-13T20:54:45.450433",
+     "duration": 0.01342,
+     "end_time": "2023-03-15T01:34:25.342575",
      "exception": false,
-     "start_time": "2023-03-13T20:54:45.437390",
+     "start_time": "2023-03-15T01:34:25.329155",
      "status": "completed"
     },
     "tags": []
    },
    "source": [
-    "h. Global usefulness test"
+    "j. Global usefulness test:\n",
+    "<br> H0 : β1 = β2 = ... = βp = 0 against the alternative\n",
+    "<br> H1 : At least one βj ̸= 0,j = 1,...,p"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "id": "40569f1a",
+   "execution_count": 13,
+   "id": "0f4e5a69",
    "metadata": {
+    "execution": {
+     "iopub.execute_input": "2023-03-15T01:34:25.372716Z",
+     "iopub.status.busy": "2023-03-15T01:34:25.371258Z",
+     "iopub.status.idle": "2023-03-15T01:34:25.408688Z",
+     "shell.execute_reply": "2023-03-15T01:34:25.404511Z"
+    },
     "papermill": {
-     "duration": 0.013945,
-     "end_time": "2023-03-13T20:54:45.478007",
+     "duration": 0.057482,
+     "end_time": "2023-03-15T01:34:25.413460",
      "exception": false,
-     "start_time": "2023-03-13T20:54:45.464062",
+     "start_time": "2023-03-15T01:34:25.355978",
      "status": "completed"
     },
     "tags": []
    },
-   "outputs": [],
-   "source": []
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "\n",
+       "Call:\n",
+       "lm(formula = price ~ ., data = cardekho2)\n",
+       "\n",
+       "Residuals:\n",
+       "    Min      1Q  Median      3Q     Max \n",
+       "-2620.0  -188.9     3.0   171.2  3970.6 \n",
+       "\n",
+       "Coefficients:\n",
+       "                         Estimate Std. Error t value Pr(>|t|)    \n",
+       "(Intercept)            -745.84341   77.73880  -9.594  < 2e-16 ***\n",
+       "makeHonda              -150.95095   31.91104  -4.730 2.28e-06 ***\n",
+       "makeHyundai              18.50214   26.50858   0.698 0.485218    \n",
+       "makeMahindra            108.30980   30.47386   3.554 0.000381 ***\n",
+       "makeMaruti              149.07261   25.60333   5.822 6.03e-09 ***\n",
+       "makeOther               262.86123   26.61647   9.876  < 2e-16 ***\n",
+       "makeTata                -50.08944   28.61375  -1.751 0.080065 .  \n",
+       "makeToyota              235.48398   34.48390   6.829 9.21e-12 ***\n",
+       "kms                      -1.58575    0.10333 -15.346  < 2e-16 ***\n",
+       "fuelPetrol               -5.70032   15.65198  -0.364 0.715725    \n",
+       "sellerIndividual       -235.50855   16.38584 -14.373  < 2e-16 ***\n",
+       "sellerTrustmark Dealer -284.31597   34.71053  -8.191 3.00e-16 ***\n",
+       "txManual               -414.75405   19.70954 -21.043  < 2e-16 ***\n",
+       "ownerSecond            -112.88321   12.72001  -8.874  < 2e-16 ***\n",
+       "ownerThird or above    -129.54557   19.78783  -6.547 6.25e-11 ***\n",
+       "mileage                  30.89608    2.08048  14.850  < 2e-16 ***\n",
+       "esize                     0.09409    0.02463   3.820 0.000134 ***\n",
+       "power                    13.82643    0.26011  53.156  < 2e-16 ***\n",
+       "---\n",
+       "Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1\n",
+       "\n",
+       "Residual standard error: 451.2 on 7779 degrees of freedom\n",
+       "Multiple R-squared:  0.6901,\tAdjusted R-squared:  0.6894 \n",
+       "F-statistic:  1019 on 17 and 7779 DF,  p-value: < 2.2e-16\n"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "summary(fit1)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "08ec4d54",
+   "metadata": {
+    "papermill": {
+     "duration": 0.031951,
+     "end_time": "2023-03-15T01:34:25.477303",
+     "exception": false,
+     "start_time": "2023-03-15T01:34:25.445352",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "In this case, we find F = 1019 with 17 and 7779 degrees of freedom, and p-value< 2.2 ×10−16. We therefore have very strong evidence to reject H0 and conclude there is insufficient evidence that all regression coefficients are zero in the population."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "69b41531",
+   "metadata": {
+    "papermill": {
+     "duration": 0.013328,
+     "end_time": "2023-03-15T01:34:25.519960",
+     "exception": false,
+     "start_time": "2023-03-15T01:34:25.506632",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "2. \n",
+    "<br> a. The sign of linoleic has change from positive in fit2 model to negative in fit3 model may result from the addition of oleic variable. The scatterplot matrix indicates that there is a strong negative relationship between linoleic and oleic (-0.84). Therefore, oleic might be the confounding variable that lead to the change in sign of linoleic coefficient of the model."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "1ef6d1d1",
+   "metadata": {
+    "papermill": {
+     "duration": 0.013286,
+     "end_time": "2023-03-15T01:34:25.546847",
+     "exception": false,
+     "start_time": "2023-03-15T01:34:25.533561",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    " b. "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "a5125cc6",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2023-03-15T01:34:25.577357Z",
+     "iopub.status.busy": "2023-03-15T01:34:25.575827Z",
+     "iopub.status.idle": "2023-03-15T01:34:25.668058Z",
+     "shell.execute_reply": "2023-03-15T01:34:25.665598Z"
+    },
+    "papermill": {
+     "duration": 0.111205,
+     "end_time": "2023-03-15T01:34:25.671690",
+     "exception": false,
+     "start_time": "2023-03-15T01:34:25.560485",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "\u001b[1mRows: \u001b[22m\u001b[34m572\u001b[39m \u001b[1mColumns: \u001b[22m\u001b[34m10\u001b[39m\n",
+      "\u001b[36m──\u001b[39m \u001b[1mColumn specification\u001b[22m \u001b[36m────────────────────────────────────────────────────────\u001b[39m\n",
+      "\u001b[1mDelimiter:\u001b[22m \",\"\n",
+      "\u001b[31mchr\u001b[39m (2): region, area\n",
+      "\u001b[32mdbl\u001b[39m (8): palmitic, palmitoleic, stearic, oleic, linoleic, linolenic, arachid...\n",
+      "\n",
+      "\u001b[36mℹ\u001b[39m Use `spec()` to retrieve the full column specification for this data.\n",
+      "\u001b[36mℹ\u001b[39m Specify the column types or set `show_col_types = FALSE` to quiet this message.\n"
+     ]
+    }
+   ],
+   "source": [
+    "olive <- read_csv(\"/kaggle/input/data303-assignment1-datasets/olive.csv\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "b75ff6ac",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2023-03-15T01:34:25.702461Z",
+     "iopub.status.busy": "2023-03-15T01:34:25.701017Z",
+     "iopub.status.idle": "2023-03-15T01:34:25.733437Z",
+     "shell.execute_reply": "2023-03-15T01:34:25.731736Z"
+    },
+    "papermill": {
+     "duration": 0.049625,
+     "end_time": "2023-03-15T01:34:25.735547",
+     "exception": false,
+     "start_time": "2023-03-15T01:34:25.685922",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "\n",
+      "|  fit  |  lwr  |  upr  |\n",
+      "|:-----:|:-----:|:-----:|\n",
+      "| 18.88 | 18.17 | 19.59 |\n",
+      "\n",
+      "Table: Prediction intervals\n",
+      "\n",
+      "\n",
+      "\n",
+      "|  fit  |  lwr  | upr  |\n",
+      "|:-----:|:-----:|:----:|\n",
+      "| 18.88 | 18.66 | 19.1 |\n",
+      "\n",
+      "Table: Confidence intervals\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "fit3 <- lm(palmitic ~ linoleic + stearic + oleic, data=olive)\n",
+    "\n",
+    "new_df <- data.frame(linoleic= 0.3, stearic = 2.2, oleic= 73.0)\n",
+    "\n",
+    "pander(\n",
+    "    predict(fit3, newdata = new_df, interval = \"prediction\"),\n",
+    "    caption = \"Prediction intervals\",\n",
+    ")\n",
+    "\n",
+    "pander(\n",
+    "    predict(fit3, newdata = new_df, interval = \"confidence\"),\n",
+    "    caption = \"Confidence intervals\",\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4e39903d",
+   "metadata": {
+    "papermill": {
+     "duration": 0.014129,
+     "end_time": "2023-03-15T01:34:25.763303",
+     "exception": false,
+     "start_time": "2023-03-15T01:34:25.749174",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "c. When the regression assumptions - linearity, independent errors, normal errors and equal error variances are met, the values the variables used in the prediction must be within the range of the values in the model dataset."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "9d70aed2",
+   "metadata": {
+    "papermill": {
+     "duration": 0.013956,
+     "end_time": "2023-03-15T01:34:25.791126",
+     "exception": false,
+     "start_time": "2023-03-15T01:34:25.777170",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "d. When some of the olive oil samples originated from the same region of Italy, The phenomenon of spatial autocorrelation is possible to occur because each random error is more similar to those in nearby locations than if the errors were independent of each other. Therefore, the spatial regression model should be used instead of a linear regression model."
+   ]
   }
  ],
  "metadata": {
@@ -930,14 +1286,14 @@
   },
   "papermill": {
    "default_parameters": {},
-   "duration": 9.543041,
-   "end_time": "2023-03-13T20:54:45.607444",
+   "duration": 12.21579,
+   "end_time": "2023-03-15T01:34:25.925570",
    "environment_variables": {},
    "exception": null,
    "input_path": "__notebook__.ipynb",
    "output_path": "__notebook__.ipynb",
    "parameters": {},
-   "start_time": "2023-03-13T20:54:36.064403",
+   "start_time": "2023-03-15T01:34:13.709780",
    "version": "2.4.0"
   }
  },
