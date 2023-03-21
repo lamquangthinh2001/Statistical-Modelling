@@ -1,0 +1,163 @@
+---
+title: "Assignment1"
+author: "Quang Thinh Lam"
+date: '2023-03-15'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment 1
+
+```{r packages, warning= FALSE, results= FALSE}
+#load packages
+library(tidyverse)
+library(dplyr)
+library(psych)
+library(ggplot2)
+library(ape)
+library(pander)
+```
+
+## Q1. a.
+
+```{r 1a, warning = FALSE}
+cardekho <- read_csv("cardekho.csv")
+pander(summary(cardekho))
+```
+
+Based on the result:
+<br>i. Price and kms might have incorrect values because the maximum values are extreme, compared to other statistics (the mean and median)
+<br>ii. There are missing observations for mileage, esize, and power variables
+
+## b.
+```{r 1b, warning = FALSE}
+cardekho2 <- read_csv("cardekho2.csv")
+```
+```{r 1b.2, warning = FALSE}
+cardekho2 %>%
+select(where(is.numeric))%>%
+pairs.panels(method = "spearman",
+hist.col = "lightgreen",
+density = TRUE,
+ellipses = FALSE
+)
+```
+
+## c. 
+Linear model for price including all predictors with no transformations or interactions.
+```{r 1c, warning = FALSE}
+fit1 <- lm(price ~., data = cardekho2)
+pander(summary(fit1))
+```
+An estimate of σ2, the error variance
+```{r 1c.2, warning = FALSE}
+(summary(fit1)$sigma)^2
+```
+## d. 
+When there is a car whose predicted price $\hat{E(Y|X)}$ equals the intercept $\beta_0$, all the predictor variables must equal zero
+
+## e. 
+<br>i. txManual: When txManual increases by 1 unit, the price of the car decreases by 414.8 units
+<br> ii. Mileage: When Mileage increases by 1 unit, the price of the car increases by 30.9 units
+
+## f. 
+95% confidence and prediction intervals for the last three observations in the dataset
+```{r 1f.1, warning = FALSE}
+cardekho_last3 <- subset(tail(cardekho2,n=3))
+pander(
+    predict(fit1, newdata = cardekho_last3, interval = "prediction"),
+    caption = "Prediction interval"
+    )
+```
+```{r 1f.2}
+cardekho_last3 <- subset(tail(cardekho2,n=3))
+pander(
+    predict(fit1, newdata = cardekho_last3, interval = "confidence"),
+    caption = "Confidence interval"
+    )
+```
+
+<br> Prediction intervals must account for both the uncertainty in estimating the population mean, plus the random variation of the individual values. Therefore, the prediction interval is always wider than a confidence interval
+
+## g. 
+Residual diagnostics for the model
+```{r 1g.1, warning = FALSE}
+par(mfrow=c(2,2))
+plot(fit1)
+```
+
+-Linearity - residuals vs. fitted plot: the curved pattern in the residuals indicates a non-linear relationship that was not captured by the model and therefore shows up in the residuals. Clear non-linearity generally means that the relationship between the response and some of the predictor variables is expected to be a curved rather than a linear association. In such cases, polynomial transformations or smoothing splines applied to the predictors can help improve model fit.
+<br>-Normality - normal Q-Q plot: there is evidence of non-normality as residuals of the two tails do not lie on the reference line. It can be dealt with through the use of transformations of the response variable.
+<br>-Equal variance (homoscedasticity) - Scale-Location or Spread-Location plot: the residuals show a wider spread as the fitted values increase. There is evidence of non-constant variance (heteroscedascity) as the spread of points changes as the fitted values change. This problem can be addressed by an appropriate "variance-stabilizing" transformation, such as a log transformation.
+<br>-Influential observations - Residuals vs. leverage plot: 3 cases are far beyond the Cook's distance lines. The plot identifiedd the influential observations as #7732, #2935, #2361
+
+## h.
+<br> Normality test: Because the sample size is larger than 50, it is suitable to use K-S test:
+<br> -Null Hypothesis (H0): The sample comes from a normal distribution.
+<br> -Alternative Hypothesis (H1): The sample does not come from a normal distribution
+```{r 1h, warning = FALSE}
+ks.test(fit1$res, "pnorm")
+```
+
+<br>As the p-value < 0.05, we reject the null hypothesis. We have sufficient evidence that the sample does not come from a normal distribution.
+<br>
+<br>Equal variance test: the Breush-Pagan test is used:
+<br>-Null Hypothesis (H0): Homoscedasticity is present (the residuals are distributed with equal variance)
+<br>-Alternative Hypothesis (H1): Heteroscedasticity is present (the residuals are not distributed with equal variance)
+```{r 1h.2, warning = FALSE}
+library(lmtest)
+bptest(fit1)
+```
+
+<br>As the p-value < 0.05, we reject the null hypothesis. We have sufficient evidence that Heteroscedasticity is present (the residuals are not distributed with equal variance).
+
+## i. 
+The VIF statistics to check for multicolinearity
+```{r 1i, warning = FALSE}
+library(car)
+vif(fit1)
+```
+
+Because there is no VIF value that exceeds 10 so that there is no severe collinearity in the model. However, it can be see that the VIF for esize is greater than 5, which is potentially concerning.
+
+## j. 
+Global usefulness test:
+<br> H0 : β1 = β2 = ... = βp = 0 against the alternative
+<br> H1 : At least one βj ̸= 0,j = 1,...,p
+```{r 1j, warning = FALSE}
+summary(fit1)
+```
+
+In this case, we find F = 1019 with 17 and 7779 degrees of freedom, and p-value< 2.2 ×10−16. We therefore have very strong evidence to reject H0 and conclude there is insufficient evidence that all regression coefficients are zero in the population.
+
+## Q2. a.
+<br>  The sign of linoleic has change from positive in fit2 model to negative in fit3 model may result from the addition of oleic variable. The scatterplot matrix indicates that there is a strong negative relationship between linoleic and oleic (-0.84). Therefore, oleic might be the confounding variable that lead to the change in sign of linoleic coefficient of the model.
+
+## b. 
+```{r 2b, warning = FALSE}
+olive <- read_csv("olive.csv")
+```
+```{r 2b.2, warning = FALSE}
+fit3 <- lm(palmitic ~ linoleic + stearic + oleic, data=olive)
+
+new_df <- data.frame(linoleic= 0.3, stearic = 2.2, oleic= 73.0)
+
+pander(
+    predict(fit3, newdata = new_df, interval = "prediction"),
+    caption = "Prediction intervals",
+)
+
+pander(
+    predict(fit3, newdata = new_df, interval = "confidence"),
+    caption = "Confidence intervals",
+)
+```
+
+## c. 
+When the regression assumptions - linearity, independent errors, normal errors and equal error variances are met, the values the variables used in the prediction must be within the range of the values in the model dataset.
+
+## d. 
+When some of the olive oil samples originated from the same region of Italy, The phenomenon of spatial autocorrelation is possible to occur because each random error is more similar to those in nearby locations than if the errors were independent of each other. Therefore, the spatial regression model should be used instead of a linear regression model.
