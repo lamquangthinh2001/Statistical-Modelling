@@ -1,0 +1,290 @@
+---
+title: "DATA 303/473 Assignment 2"
+author: "Quang Thinh Lam"
+date:   "Due 1159pm Friday 31 March"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+## Assignment Questions
+```{r, echo = FALSE}
+#Load libraries
+library(dplyr)
+library(pander)
+library(psych)
+library(car)
+library(ggplot2)
+library(gridExtra)
+```
+
+
+**Q1.(20 marks)**   We'll continue to use the CarDekho data from Assignment 1. As a reminder the variables in the `cardekho2.csv` dataset are: 
+
+*  `price`: Selling price in thousand Indian Rupees (INR)
+*  `make`: Car make grouped into eight categories: `Ford`, `Honda`, `Hyundai`, `Mahindra`, `Maruti`, `Tata`, `Toyota`, `Other`
+*  `kms`: Kilometres driven (x 1000)
+*  `fuel`: Fuel type: `Diesel` or `Petrol`
+*  `seller`:  Seller type: `Dealer`, `Individual` or `Trustmark Dealer`
+*  `tx`:  Transmission type: `Automatic` or `Manual`
+*  `owner`:  Current owner is: `First`, `Second` or `Third or above` owner
+*  `mileage`:  Fuel economy in kilometres per litre (kmpl)
+*  `esize`:  Engine size in cubic centimetres (CC)
+*  `power`: Maximum engine power in brake horse power (bhp) 
+
+The residual diagnostic plot showed evidence of non-linear relationships between `price` and some predictors, non-normality and non-constant variance.  To address non-constant variance, use `log(price)` as the response variable for this assignment.
+
+```{r}
+#Read the data cardekho2
+cardekho2 <- read.csv("cardekho2.csv")
+```
+
+
+a.  **(3 marks)**  Fit a model with `log(price)` as the response variable and include all predictors without transformations or interactions.  Use the plot function to carry out residual diagnostics for your ﬁtted model. Based on these plots, are there any observations you might consider excluding from further analysis?  Explain your answer briefly.
+
+```{r 1a}
+#Fit the model
+fit1 <- lm(log(price) ~ make + kms + fuel + seller + tx + owner + mileage + esize + power, data = cardekho2)
+par(mfrow = c(2,2))
+#Diagnostics plot
+plot(fit1)
+```
+
+The observations that might be excluded from further analysis: 2361th.
+
+Reasons: The observation 2361th is outside the Cook's Distance threshold, which makes it a highly influential observation in the model.
+
+Although the observations 2935th and 7732th are potential outliers across all four residual diagnostic plots, they are not highly influential, these observations will be retained in further analyses.
+
+Some data cleaning is done and a new dataset, `cardekho3.csv,` (available on Canvas) is created. Use this new dataset to answer the rest of Question 1. 
+
+b.  **(3 marks)** Read in dataset `cardekho3.csv` and fit the same model as in part (a).  Plot the residuals from your fitted model against each of the numerical predictors `kms`, `mileage`, `esize` and `power`. Is there an indication of a non-linear relationships with `log(price)` for any of these predictors? If so, which ones?
+
+```{r 1b.1}
+#Read the new data cardekho3
+cardekho3 <- read.csv("cardekho3.csv")
+```
+
+```{r 1b.2}
+fit2 <- lm(log(price) ~ make + kms + fuel + seller + tx + owner + mileage + esize + power, data = cardekho3)
+cardekho3$.resid<-fit2$residuals
+
+kms<-ggplot(cardekho3,aes(x= kms, y=.resid))+
+geom_point() + geom_smooth(method='loess')+
+labs(x="Kms", y="Residuals")+
+theme_bw()
+
+mileage<-ggplot(cardekho3,aes(x=mileage, y=.resid))+
+geom_point()+ geom_smooth(method='loess')+
+labs(x="Mileage", y="Residuals")+
+theme_bw()
+
+esize<-ggplot(cardekho3,aes(x=esize, y=.resid))+
+geom_point()+ geom_smooth(method='loess')+
+labs(x="esize", y="Residuals")+
+theme_bw()
+
+power<-ggplot(cardekho3,aes(x=power, y=.resid))+
+geom_point()+ geom_smooth(method='loess')+
+labs(x="power", y="Residuals")+
+theme_bw()
+library(gridExtra)
+grid.arrange(kms, mileage, esize, power, nrow=2)
+```
+
+There is an indication of non-linear patterns in `kms`, `esize`, and `power` with `log(price)`
+
+c.  **(3 marks)** Based on the model fitted in part (b), calculate and give an interpretation for the difference in **price** for a petrol car compared to a diesel car when all other predictors are held constant.
+
+```{r 1c.1}
+summary(fit2)
+```
+
+```{r 1c.2}
+fuel_petrol <- (abs(exp(summary(fit2)$coefficient[10,1]) - 1) * 100)
+```
+
+
+Based on the fitted model, the coefficient of `fuelPetrol` is approximately -0.1906. This indicates that the petrol cars have lower price than diesel cars of approximately `r fuel_petrol`%
+
+
+
+d.  **(4 marks)**  Based on the dataset and model in part(b), provide two plots that give graphical evidence that a log transformation is the most appropriate transformation for `kms` in a model for `log(price)`.  Explain your reasoning briefly.
+
+```{r 1d}
+kms<-ggplot(cardekho3,aes(x=kms, y=log(price)))+
+  geom_point()+
+  geom_smooth(method='loess')+
+  labs(x="kms", y="log(Price)", 
+       title=paste("Pearson's r=",round(cor(log(cardekho3$price), cardekho3$kms),2)))+
+  theme_bw()+
+  theme(plot.title = element_text(hjust = 0.5))
+  
+kms_log<-ggplot(cardekho3,aes(x=log(kms), y=log(price)))+
+  geom_point()+
+  geom_smooth(method='loess')+
+  labs(x="log(kms)", y="log(Price)", 
+       title=paste("Pearson's r=",round(cor(log(cardekho3$price), log(cardekho3$kms)),2)))+
+  theme_bw()+
+  theme(plot.title = element_text(hjust = 0.5))
+  
+grid.arrange(kms,kms_log, nrow=1)
+```
+
+The plot of `log(Price)` against `kms` shows a non-linear and monotonic relationship, therefore a transformation of `kms` should be considered. In addition, the values for `kms` are also right-skewed, so a log-transformation for `kms` would be implemented.
+
+e. **(3 marks)** Apply stepwise regression based on the AIC criterion for the model in part (b). Are there any predictors you would exclude from the model?  Explain your answer briefly.
+
+```{r 1e}
+step(fit2, direction = "both")
+```
+
+We have:
+
+-   B: the initial model with all predictors. BIC = -14513
+
+-   A: the model which excludes sellers. BIC = -14484
+
+BIC(A) - BIC(B) = -14484 - (-14513) = 29
+
+Excluding any of the predictors results in an increase in AIC of more than 2.5. Therefore, none of the predictors should be excluded from the model.
+
+\newpage
+f.  **(4 marks)**  Fit a model you would use to investigate whether the effect of `mileage` on `log(price)`  depends on the value of `tx`.  Based on your model, give the change in $E(log(price))$ associated with a unit increase in `mileage` for a car with:
+    (i)  Automatic  transmission
+    (ii) Manual transmission.
+    
+```{r 1f.1}
+fit3 <- lm(log(price) ~ make + log(kms) + fuel + seller + esize + power + owner + tx + mileage +  mileage:tx, data = cardekho3)
+pander(summary(fit3), caption = "")
+```
+```{r 1f.2}
+mileage_coef <- summary(fit3)$coef["mileage",1]
+txManual_mileage_coef <- summary(fit3)$coef["txManual:mileage",1]
+auto_change <- mileage_coef + txManual_mileage_coef * 0
+manual_change <- mileage_coef + txManual_mileage_coef * 1
+```
+
+(i) Automatic transmission:
+
+a unit increase in `mileage` for a car with Automatic transmission results in change in $E(log(price))$ = `r auto_change`, holding all other variable constant
+
+(ii) Manual transmission:
+
+a unit increase in `mileage` for a car with Manual transmission results in change in $E(log(price))$ = `r manual_change`, holding all other variable constant
+
+**Q2.(20 marks)**  Data were collected on 158 cruise ships in operation around the world in 2013.  Complaints had been raised by customers about overcrowding on cruises and there was interest in investigating whether there was a trend of overcrowding on certain types of ships.  As part of the investigation, a regression analysis was carried out to explore the connection between passenger density (no. of passengers per unit area) and ship characteristics.  The variables in the dataset were:
+
+*  `name`: Ship Name 
+*  `line`: Cruise Line 
+*  `line_grp`: Cruise Line grouped
+*  `age.2013`: Age (as of 2013) 
+*  `tonnage`: Weight of ship (1000s of tonnes)
+*  `passengers.100`: Maximum no. of passengers (100s)
+*  `length`: Length of ship (100s of feet)
+*  `cabins`: No. of passenger cabins (100s) 
+*  `pass.density`: Passenger density (no. of passengers per square foot)
+*  `crew.100`: No. of crew member (100s)  
+
+The data are available in the file `cruise_ship.csv`.  The dataset was imported into R and the scatterplot matrix below was obtained.
+
+```{r 2, fig.align="center", echo=FALSE}
+library(dplyr); library(pander); library(psych); library(car)
+cru<-read.csv("cruise_ship.csv", header=TRUE, stringsAsFactors = TRUE)
+cru<-select(cru, line_grp, age.2013, tonnage, passengers.100,length, cabins, crew.100, pass.density)
+cru%>% dplyr::select(where(is.numeric))%>%
+pairs.panels(method = "spearman", hist.col = "lightgreen", density = TRUE,   
+             ellipses = FALSE)
+
+```
+
+The scatterplot matrix indicates severe multicollinearity among the predictors `tonnage`, `passengers.100`, `length`, and `crews.100`. These four predictors all relate to the size of a ship, so only a subset will be used.
+
+
+a.  **[8 marks]**  Fit a model for `pass.density` using the predictors `line_grp`, `age.2013`, `passengers.100` and  `length`.  Using residual diagnostic checks, determine whether any transformations of the predictors or response variable are necessary.  Explain your answer, including identification of which predictors you may need to transform. Provide output of any graphical checks or hypothesis tests you perform.
+
+```{r 2a}
+#fit the model
+fit4 <- lm(pass.density ~ line_grp + age.2013 + passengers.100 + length, data = cru)
+par(mfrow=c(2,2))
+# Residual diagnostics plot
+plot(fit4) 
+```
+
+-Linearity - residuals vs. fitted plot: there is no curved pattern in the residuals which indicates a non-linear relationship that was not captured by the model and also does not show up in the residuals. No transformation for the predictors are required
+
+-Normality - normal Q-Q plot: There is slight deviation from the straight line, so there is evidence of potential non-normality. The transformation of the response variable is suggested.
+
+-Equal variance (homoscedasticity) - Scale-Location or Spread-Location plot: there is evidence of non-constant variance. There is a need of transformation of the response variable to address this problem.
+
+-Residuals vs. leverage plot: there are no highly influential observations. Cook's distance lines (a red dashed line) are barely visible because all observations are inside of the Cook's distance thresholds. Therefore, no observation is needed to be excluded.
+
+For the rest of the question use `log(pass.density)` as the response variable.
+
+b.  **[3 marks]**  Fit a model with `log(pass.density)` as the response variable including all the predictors in part (a) without any transformations.  Apply stepwise regression based on the BIC criterion. Are there any predictors you would exclude from the model?  Explain your answer briefly.
+
+```{r 2b}
+fit5 <- lm(log(pass.density) ~ line_grp + age.2013 + passengers.100 + length, data = cru)
+step(fit5, direction = "both", k=log(nrow(cru)))
+```
+
+We have:
+
+-   B: the model which excludes line_grp. BIC = -560.15
+
+-   A: the initial model with all predictors. BIC = -543.42
+
+BIC(A) - BIC(B) = -543.42 - (-560.15) = 16.73
+
+Applying BIC rules of thumb for BIC means there is very strong preference for the model with a smaller BIC value. Therefore, the preferred model is model B, which excludes line_grp and includes three predictors: age.2013, passengers.100, and length.
+
+
+c. **[3 marks]**  Fit a GAM for `log(pass.density)` and smooth terms for each of the predictors `age.2013`, `passengers.100` and `length`.  Comment on the non-linearity and significance of smooth terms.
+
+```{r 2c}
+library(mgcv)
+fit.gam <- gam(log(pass.density) ~ line_grp + s(age.2013) + s(passengers.100) + s(length), data = cru, method = "REML")
+summary.gam <- summary(fit.gam)
+pander(summary.gam$s.table, digits=4)
+```
+
+In this model:
+
+- age.2013, passengers.100 are both non-linear and significant
+
+- length is linear and significant
+
+d.  **[2 marks]**  Is there evidence that more basis functions are required for any of the smooth terms?  Explain your answer briefly.
+
+```{r 2d}
+par(mfrow=c(2,2))
+gam.check(fit.gam, k.rep = 1000)
+```
+
+If p-value is low, k-index < 1, and edf ≈ k' => more basis functions are needed
+
+In our model:
+
+The p-values for `passengers.100` and `length` are relatively low. However, in all cases, edf is much lower than k, so we likely have enough basis functions.
+
+e.  **[3 marks]**  Use the `gam()` function to fit a model for `log(pass.density)` with linear terms for all 4 predictors.  Calculate BIC for this model and for the model with smooth terms in part (c). Print the results in a table and state which of the models is preferred.  Explain your answer briefly.
+
+```{r 2e}
+fit.lm <- gam(log(pass.density) ~ line_grp + age.2013 + passengers.100 + length, data = cru, method = "REML")
+step(fit5, direction = "both", k=log(nrow(cru)))
+```
+
+```{r 2e.2}
+pander(BIC(fit.lm, fit.gam), caption = "")
+```
+
+Based on the BIC, `fit.gam` model is preferred as it is has lower BIC (-131.2), compared to that of `fit.lm` model (89.97).
+
+However, in order to choose the final preferred model, we also need to consider the AIC and the adjusted $R^2$.
+
+g.  **[1 mark]** Explain briefly why it is valid to make the comparison in part (f) using BIC.
+
+It is valid to make the comparison because both `fit.lm` and `fit.gam` models use the same estimation method, namely 'REML'.
+
+---------------
