@@ -1,0 +1,336 @@
+---
+title: "DATA 303/473 Assignment 3"
+output: 
+  html_document 
+#    latex_engine: xelatex
+#date: '2022-03-29'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# NAME (ID): Lam Quang Thinh (300538520)
+
+##  Boston Data Set
+
+In this assignment, we use `Boston` data set. 
+This is a data set containing housing values in 506 suburbs of Boston
+(a data frame with 506 rows and 13 variables).
+
+* crim:
+per capita crime rate by town.
+* zn:
+proportion of residential land zoned for lots over 25,000 sq.ft.
+* indus:
+proportion of non-retail business acres per town.
+* chas:
+Charles River dummy variable (= 1 if tract bounds river; 0 otherwise).
+* nox:
+nitrogen oxides concentration (parts per 10 million).
+* rm:
+average number of rooms per dwelling.
+* age:
+proportion of owner-occupied units built prior to 1940.
+* dis:
+weighted mean of distances to five Boston employment centres.
+* rad:
+index of accessibility to radial highways.
+* tax:
+full-value property-tax rate per $10,000.
+* ptratio:
+pupil-teacher ratio by town.
+* lstat:
+percent of households with low socioeconomic status.
+* medv:
+median value of owner-occupied homes in $1000s.
+
+```{r}
+set.seed(1)
+library(ISLR2)
+head(Boston)
+dim(Boston)
+```
+
+
+
+
+## Q1 (Deviance test, AIC, test MSE)
+
+Our interest is to predict `medv` (median house value) using predictors 
+
+* `rm`(average number of rooms per house), 
+* `age`(proportion of owner-occupied units built prior to 1940) and 
+* `lstat`(percent of households with low socioeconomic status). 
+
+
+```{r}
+pairs(~ medv + rm + age + lstat,  data = Boston)
+```
+
+
+
+We fit the following models:
+```{r eval=FALSE}
+m1 : medv ~ rm  + lstat
+m2 : medv ~ rm  + poly(lstat, df=2)
+m3 : medv ~ rm + age + lstat
+m4 : medv ~ rm + age + poly(lstat, df=2)
+```
+
+
+
+(a) **(10 marks)** Fit the model and use `anova()` function to do the deviance test to compare the models.
+Choose the best model.
+
+```{r}
+# Fit model 1
+m1 <- lm(medv ~ rm + lstat, data = Boston)
+
+# Fit model 2
+m2 <- lm(medv ~ rm + poly(lstat, df = 2), data = Boston)
+
+# Fit model 3
+m3 <- lm(medv ~ rm + age + lstat, data = Boston)
+
+# Fit model 4
+m4 <- lm(medv ~ rm + age + poly(lstat, df = 2), data = Boston)
+
+```
+
+The nested structure of these models:
+
+Model 1 (m1): medv ~ rm + lstat
+Model 2 (m2): medv ~ rm + poly(lstat, df=2) (includes all predictors of m1 and adds a quadratic term for lstat)
+Model 3 (m3): medv ~ rm + age + lstat (includes all predictors of m1 and adds a new predictor age)
+Model 4 (m4): medv ~ rm + age + poly(lstat, df=2) (includes all predictors of m2 and adds a new predictor age)
+Therefore, we can say that:
+
+Model 2 is nested within Model 1 (i.e., Model 2 is a more complex version of Model 1).
+Model 3 is also nested within Model 1 (i.e., Model 3 is a more complex version of Model 1).
+Model 4 is nested within Model 2 (i.e., Model 4 is a more complex version of Model 2).
+
+```{r}
+# Compare model 2 to model 1
+anova(m1, m2)
+```
+
+The p-value of the F-test is less than 0.05, which indicates that Model 2 is significantly better than Model 1. Therefore, we can reject Model 1 in favor of Model 2.
+
+```{r}
+# Compare model 3 to model 1
+anova(m1, m3)
+```
+
+The p-value of the F-test is less than 0.05, which indicates that Model 3 is significantly better than Model 1. Therefore, we can reject Model 1 in favor of Model 3.
+
+
+```{r}
+# Compare model 4 to model 2
+anova(m2, m4)
+```
+
+The p-value of the F-test is less than 0.05, which indicates that Model 4 is significantly better than Model 2. Therefore, we can reject Model 2 in favor of Model 4
+
+Based on the results of the deviance tests, we can conclude that Model 4 is the best model among the four models. It has the lowest deviance and the smallest residual sum of squares (RSS).
+
+(b) **(5 marks)** Calculate `AIC` for each model fitted in (a). Choose the best model using the value of `AIC`.
+
+```{r}
+# Calculate AIC for model 1
+AIC(m1)
+
+# Calculate AIC for model 2
+AIC(m2)
+
+# Calculate AIC for model 3
+AIC(m3)
+
+# Calculate AIC for model 4
+AIC(m4)
+```
+
+Based on the AIC values, Model 4 has the lowest AIC, which indicates that it is the best model among the four models. Therefore, we can choose Model 4 as the best model using the AIC criterion.
+
+
+(c) **(10 marks)** Split the data set ($100\%$) into a training set ($80\%$) and a test set ($20\%$). Then fit model1--model5 on the training set, and calculate the test MSE for each model.
+Choose the best model.
+
+```{r}
+set.seed(312)  # for reproducibility
+
+# Split the dataset into a training set (80%) and a test set (20%)
+train_index <- sample(nrow(Boston), nrow(Boston)*0.8)
+train <- Boston[train_index, ]
+test <- Boston[-train_index, ]
+
+# Fit the models on the training set
+m1 <- lm(medv ~ rm + lstat, data = train)
+m2 <- lm(medv ~ rm + poly(lstat, df = 2), data = train)
+m3 <- lm(medv ~ rm + age + lstat, data = train)
+m4 <- lm(medv ~ rm + age + poly(lstat, df = 2), data = train)
+
+# Calculate the test MSE for each model
+test_mse1 <- mean((test$medv - predict(m1, newdata = test) )^2)
+test_mse2 <- mean((test$medv - predict(m2, newdata = test) )^2)
+test_mse3 <- mean((test$medv - predict(m3, newdata = test) )^2)
+test_mse4 <- mean((test$medv - predict(m4, newdata = test) )^2)
+
+# Choose the best model
+models <- c("Model 1" = test_mse1, "Model 2" = test_mse2, "Model 3" = test_mse3, "Model 4" = test_mse4)
+models
+
+```
+
+Based on the test MSE values, Model 4 has the lowest test MSE of 24.83804. Therefore, we can choose Model 4 as the best model for predicting medv in this dataset.
+
+
+(d) **(10 marks)**  By combining the result from (a), (b) and (c), decide the best model.
+Refit the chosen model using all of the `Boston` data set.
+Make a prediction of `medv` for a suburb with values `rm=10`, `age=50` and `lstat=10`.
+Interpret the predicted value.
+
+Based on the results of (a), (b), and (c), we can see that Model 4 (medv ~ rm + age + poly(lstat, df=2)) is the best model. This model has the lowest AIC value, and the lowest test MSE on the test set, indicating better performance than the other models.
+
+```{r}
+# Fit the chosen model with the entire dataset
+final_model <- lm(medv ~ rm + age + poly(lstat, df = 2), data = Boston)
+
+# Predict the value of medv for a suburb with values rm=10, age=50 and lstat=10
+new_data <- data.frame(rm = 10, age = 50, lstat = 10)
+pred_medv <- predict(final_model, newdata = new_data)
+
+# Interpret the predicted value
+cat("The predicted value of medv for a suburb with rm=10, age=50, and lstat=10 is:", pred_medv)
+
+```
+
+Interpretation: The model predicts a median value of owner-occupied homes in the suburb of approximately 36.7 thousand dollars, given the input values of rm=10, age=50, and lstat=10.
+
+## Q2 (LASSO, best subset selection)
+We continue to work on `Boston` data set. 
+The aim in Q2 is  to predict `medv` (median house value) using all predictors in `Boston` data set.  In the following questions, we apply LASSO and the best subset selection methods.
+
+ (a) **(10 marks)** (LASSO) 
+ Fit a lasso model on the training set, with  \(\lambda\) chosen by cross-validation with the `1 se rule` . Report the test error obtained, along with the values of non-zero coefficient estimates. We use the training set and the test set created in Q1 (c).
+
+```{r}
+# Load the glmnet package
+library(glmnet)
+
+# Split the data into training and test sets
+set.seed(123)
+train_index <- sample(nrow(Boston), 0.8*nrow(Boston))
+train <- Boston[train_index,]
+test <- Boston[-train_index,]
+
+# Extract the predictors and response variable
+y <- Boston$medv
+x = model.matrix(medv~.,data =Boston)[,-1]
+
+# Fit the LASSO model with cross-validation
+out <- glmnet(x[train_index,], y[train_index], alpha = 1)
+
+# Get the optimal value of lambda
+cv.out <- cv.glmnet(x[train_index,], y[train_index], alpha = 1)
+lam1se = cv.out$lambda.1se
+
+# Fit the LASSO model with the optimal value of lambda
+y_hat_lasso <- predict(out, s=lam1se, newx = x[-train_index,])
+mean((test$medv - y_hat_lasso)^2)
+```
+
+
+(b) **(10 marks)** (Best subset selection)
+Do the best subset selection with `BIC` and choose the best model.
+Report the values of coefficient estimates in the best model.
+
+```{r}
+library(leaps)
+regfit.full=regsubsets(medv~.,Boston, nvmax=12) 
+reg.summary=summary(regfit.full) 
+names(reg.summary)
+```
+```{r}
+plot(reg.summary$bic,xlab="Number of Variables",ylab="BIC",type='l')
+```
+```{r}
+best_bic=which.min(reg.summary$bic)
+paste("Best subset selection model using BIC:",best_bic)
+```
+
+The best subset selection model is:
+
+```{r}
+coef(regfit.full,best_bic)
+```
+
+Our best subset selection model is: medv ~ crim + zn + chas + nox + rm + dis + rad + tax + ptratio + lstat
+
+
+
+(c) **(10 marks)** 
+Comparing the LASSO chosen model and the best subset selected model, which is the better model? Explain why?
+
+* Comparing the LASSO chosen model and the best subset selected model, it's difficult to definitively say which model is better, as they each have their strengths and weaknesses. However, here are some points to consider:
+
+* The LASSO method is computationally more efficient than the best subset selection method, especially when the number of predictors is large. This is because LASSO performs variable selection and regularization simultaneously, while the best subset selection method considers all possible subsets of predictors.
+
+* The LASSO method tends to shrink the coefficient estimates towards zero, which can help prevent overfitting when there are many predictors in the model. The best subset selection method does not inherently perform any regularization, so it may be more prone to overfitting in certain situations.
+The LASSO method selects a subset of predictors by setting some of the coefficient estimates to exactly zero, while the best subset selection method selects a subset of predictors by including all or some of the predictors. If we are interested in a parsimonious model with fewer predictors, the LASSO method may be preferred.
+
+* The LASSO method selects the tuning parameter λ using cross-validation, which can help prevent overfitting and select the optimal value of λ. The best subset selection method selects the optimal subset based on a particular criterion (e.g., BIC), which may not necessarily be the best model in terms of prediction performance on new data.
+
+* In summary, both LASSO and best subset selection have their advantages and disadvantages, and the choice between the two methods depends on the specific problem and goals of the analysis.
+
+
+
+
+(d) **(10 marks)** 
+How can you improve the fit of the best subset selected model?
+
+Let say, we suspect that there may be an interaction between rm and lstat that is important for predicting medv. To test this, we could add an interaction term between rm and lstat to our model:
+
+```{r}
+regfit.full.improved=regsubsets(medv ~ . + rm:lstat,Boston, nvmax=12) 
+reg.summary.improved=summary(regfit.full.improved) 
+names(reg.summary.improved)
+```
+
+```{r}
+plot(reg.summary.improved$bic,xlab="Number of Variables",ylab="BIC",type='l')
+```
+
+```{r}
+best_bic.improved=which.min(reg.summary.improved$bic)
+paste("The improved Best subset selection model using BIC:",best_bic.improved)
+```
+
+The improved best subset selection model is:
+
+```{r}
+coef(regfit.full.improved,best_bic.improved)
+```
+
+```{r}
+paste("BIC of the initial best subset selection model (A)",reg.summary$bic[best_bic]
+)
+paste("BIC of the improved best subset selection model (B)",reg.summary.improved$bic[best_bic.improved]
+)
+```
+
+We have: BIC(A) - BIC(B) = 146 > 10, which indicates a very strong preference for model (B). Therefore, using BIC, adding the interaction term between rm and lstat has improved our best subset selection model. 
+Our final best subset selection model is: medv ~ crim + chas + nox + rm + dis + rad + tax + ptratio + lstat + rm:lstat
+
+**[Total: 75 marks]**
+
+
+
+
+
+
+
+
+
+
+
